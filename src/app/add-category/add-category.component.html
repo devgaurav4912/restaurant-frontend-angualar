@@ -1,0 +1,26 @@
+<div class="add-category-dialog">
+  <h2 mat-dialog-title>Add Category</h2>
+  <mat-dialog-content>
+    <hr>
+    <form [formGroup]="categoryForm" (ngSubmit)="postCategory()">
+      <mat-form-field class="add-category-form">
+        <mat-label>Category Name</mat-label>
+        <input matInput type="text" placeholder="Enter Category Name" formControlName="categoryName" required>
+      </mat-form-field>
+      <br/>
+      <div class="add-category-form">
+        <mat-label>Select Category Image</mat-label>
+        <input type="file" (change)="onFileChange($event)" required>
+      </div>
+      <br />
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <!-- <button mat-button (click)="onSave()" [disabled]="!categoryForm.valid">Save</button> -->
+    <button mat-button (click)="onSave()">Save</button>
+  </mat-dialog-actions>
+  <div *ngIf="isSubmitting" class="loader-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

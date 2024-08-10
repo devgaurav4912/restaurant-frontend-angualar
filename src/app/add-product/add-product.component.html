@@ -1,0 +1,45 @@
+<div class="container form-container">
+  <h1 class="heading text-center">Add Product</h1>
+  <form id="settingsForm" [formGroup]="addProductForm" (ngSubmit)="postProduct()">
+    <!-- Form fields here -->
+    <div class="mt-1 mb-1">
+      <label for="productName" class="form-label">Product Name -</label>
+      <input formControlName="productName" type="text" class="form-control" placeholder="Enter Product Name">
+      <div *ngIf="addProductForm.get('productName')!.invalid && addProductForm.get('productName')!.touched" class="text-danger">
+        Product Name is required!!
+      </div>
+    </div>
+    <br />
+    <div class="mt-1 mb-1">
+      <label for="productImage" class="form-label">Product Image -</label>
+      <input (change)="onFileChange($event)" type="file" class="form-control" placeholder="Select Product Image">
+      <div *ngIf="addProductForm.get('productImage')!.invalid && addProductForm.get('productImage')!.touched" class="text-danger">
+        Image is required!!
+      </div>
+    </div>
+    <br />
+    <div class="mt-1 mb-1">
+      <label for="productPrice" class="form-label">Product Price -</label>
+      <input formControlName="productPrice" type="text" class="form-control" placeholder="Enter Product Price">
+      <div *ngIf="addProductForm.get('productPrice')!.invalid && addProductForm.get('productPrice')!.touched" class="text-danger">
+        Product price required!!
+      </div>
+    </div>
+    <br />
+    <label for="selectedCategoryName" class="form-label">Select Category -</label>
+    <select formControlName="selectedCategoryName" class="form-control">
+      <option *ngFor="let category of categories" [value]="category.categoryName">
+        {{category.categoryName}}
+      </option>
+    </select>
+    <div *ngIf="addProductForm.get('selectedCategoryName')!.invalid && addProductForm.get('selectedCategoryName')!.touched" class="text-danger">
+      Please select a category.
+    </div>
+    <button type="submit" class="btn btn-success btn-lg btn-center" style="width: 200px;" [disabled]="isSubmitting">Submit</button>
+  </form>
+
+  <!-- Loader overlay -->
+  <div *ngIf="isSubmitting" class="loader-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
