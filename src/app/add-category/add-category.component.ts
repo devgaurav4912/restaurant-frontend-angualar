@@ -111,7 +111,7 @@ export class AddCategoryFormComponent implements OnInit {
 //       }
 
 
-  //this.selectedFile = this.categoryImageUrl;
+  
 
 
       this.service.updateCategory(this.categoryId,formData,this.selectedFile).subscribe((res: any) => {
