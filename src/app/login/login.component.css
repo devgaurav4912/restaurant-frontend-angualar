@@ -88,12 +88,35 @@
     outline: none; /* Remove default outline */
     background-color: #b55add;
 }
-.form-control:focus{
-    border-color: #b55add; /* Change this to your desired color */
-    box-shadow: 0 0 5px #b55add; /* Optional: Add a shadow effect */
-    outline: none; /* Remove default outline */
-}
+/* .form-control:focus{
+    border-color: #b55add; 
+    box-shadow: 0 0 5px #b55add; 
+    outline: none; 
+} */
 .log-con{
 color: #888;
 }
+
+.position-relative {
+    position: relative;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .form-control {
+    padding-right: 35px; /* Ensure space for the eye icon */
+  }
+  
+  .text-danger {
+    margin-top: 5px; /* Adjust margin to give space for the error message */
+  }
+  
+
 

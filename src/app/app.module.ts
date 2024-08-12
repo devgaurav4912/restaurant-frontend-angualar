@@ -9,7 +9,7 @@ import { PosComponent } from './pos/pos.component';
 import { BillingComponent } from './billing/billing.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarConfig, MatSnackBarModule } from '@angular/material/snack-bar';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -25,6 +25,9 @@ import { AddCategoryFormComponent } from './add-category/add-category.component'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddProductComponent } from './add-product/add-product.component';
 import { MatInputModule } from '@angular/material/input';
+import { SettingMasterComponent } from './setting-master/setting-master.component';
+import { CommonModule } from '@angular/common';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 
 
@@ -41,7 +44,9 @@ import { MatInputModule } from '@angular/material/input';
     CategoryListComponent,
     ConfirmdialogComponent,
     AddCategoryFormComponent,
-    AddProductComponent
+    AddProductComponent,
+    SettingMasterComponent,
+    LoaderComponent
     
   ],
   imports: [
@@ -50,6 +55,7 @@ import { MatInputModule } from '@angular/material/input';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    CommonModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatDialogModule,
@@ -62,7 +68,7 @@ import { MatInputModule } from '@angular/material/input';
     MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [
     provideAnimationsAsync()
