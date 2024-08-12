@@ -3,6 +3,7 @@ import { ApiService } from '../api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoaderService } from '../shared/loader.service';
 
 @Component({
   selector: 'app-add-product',
@@ -14,12 +15,13 @@ export class AddProductComponent implements OnInit {
   categories: any[] = [];
   addProductForm: FormGroup;
   selectedFile!: File;
-  isSubmitting: boolean = false;
+ // isSubmitting: boolean = false;
 
   constructor(private service: ApiService,
               private fb: FormBuilder,
               private router: Router,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private loaderService: LoaderService) {
     this.addProductForm = this.fb.group({
       productName: ['', Validators.required],
       productImage: ['', Validators.required],
@@ -45,9 +47,9 @@ export class AddProductComponent implements OnInit {
   }
 
   postProduct() {
-    if (this.isSubmitting) return;
+    //if (this.isSubmitting) return;
 
-    this.isSubmitting = true;
+    this.loaderService.show();
 
     const productData = this.addProductForm.value;
     const formData = new FormData();
@@ -62,7 +64,8 @@ export class AddProductComponent implements OnInit {
       .subscribe((res: any) => {
         console.log("product res -->", res);
         this.router.navigate([""]);
-        this.isSubmitting = false;
+       // this.isSubmitting = false;
+       this.loaderService.hide();
         this.addProductForm.reset(); 
         this.snackBar.open("Product added", "Close", {
           duration: 3000,
@@ -71,7 +74,7 @@ export class AddProductComponent implements OnInit {
         });
       }, (error: any) => {
         console.error("Error adding product: ", error);
-        this.isSubmitting = false;
+        this.loaderService.hide();
       });
   }
 }

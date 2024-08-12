@@ -11,11 +11,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  submitted = false;
+  passwordFieldType: string = 'password';
+  showPassword: boolean = false;
 
-  constructor(private fb: FormBuilder,
-              private apiService: ApiService,
-              private route: Router,
-              private snackBar: MatSnackBar) {}
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService,
+    private route: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -34,12 +39,19 @@ export class LoginComponent implements OnInit {
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
+    this.passwordFieldType = this.showPassword ? 'text' : 'password';
   }
-
   loginUser() {
+    this.submitted = true;
+  
+    // Mark all controls as touched to show validation errors
+    this.loginForm.markAllAsTouched();
+  
     if (this.loginForm.invalid) {
-      return;
+      return;  // Prevent submission if the form is invalid
     }
+  
+    // Proceed with login if the form is valid
     this.apiService.loginUser(this.loginForm.value).subscribe((res: any) => {
       console.log("login response ==> " + res);
       if (res === "Login successful") {
@@ -50,20 +62,64 @@ export class LoginComponent implements OnInit {
         });
         this.route.navigate([""]);
       } else if (res === "Invalid credentials" || res === "User not found") {
-        alert("Please enter valid credentials.");
+        this.snackBar.open("Invalid Credentials!", "Close", {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center'
+        });
+        console.log("=====LOGIN-UNSUCCESSFULL=1==")
       } else {
-        alert("An unexpected error occurred.");
+        this.snackBar.open("An unexpected error occurred.", "Close", {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center'
+        });
+        console.log("=====LOGIN-UNSUCCESSFULL=2==")
       }
+
+      console.log("=====LOGIN-UNSUCCESSFULL=3==")
+
     });
-    
-    this.snackBar.open("Invilid Credintials!!", "Close", {
+
+    this.snackBar.open("Invalid Credentials!", "Close", {
       duration: 3000,
       verticalPosition: 'top',
       horizontalPosition: 'center'
     });
-    
-  }
+    console.log("=====LOGIN-UNSUCCESSFULL=4==")
 
-  passwordFieldType: string = 'password';
-  showPassword: boolean = false;
+  }
+  
+
+  // loginUser() {
+  //   this.submitted = true;
+
+  //   if (this.loginForm.invalid) {
+  //     return;  // Prevent submission if the form is invalid
+  //   }
+
+  //   this.apiService.loginUser(this.loginForm.value).subscribe((res: any) => {
+  //     console.log("login response ==> " + res);
+  //     if (res === "Login successful") {
+  //       this.snackBar.open("Login successful", "Close", {
+  //         duration: 3000,
+  //         verticalPosition: 'top',
+  //         horizontalPosition: 'center'
+  //       });
+  //       this.route.navigate([""]);
+  //     } else if (res === "Invalid credentials" || res === "User not found") {
+  //       this.snackBar.open("Invalid Credentials!", "Close", {
+  //         duration: 3000,
+  //         verticalPosition: 'top',
+  //         horizontalPosition: 'center'
+  //       });
+  //     } else {
+  //       this.snackBar.open("An unexpected error occurred.", "Close", {
+  //         duration: 3000,
+  //         verticalPosition: 'top',
+  //         horizontalPosition: 'center'
+  //       });
+  //     }
+  //   });
+  // }
 }

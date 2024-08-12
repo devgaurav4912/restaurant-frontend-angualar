@@ -1,5 +1,48 @@
+
+.title-category {
+    font-family: 'Poppins', sans-serif; /* Stylish and modern font */
+    font-size: 25px; /* Large font size for emphasis */
+    color: #4A148C; /* Deep purple color for a bold look */
+    text-transform: uppercase; /* Makes all letters uppercase */
+    letter-spacing: 2px; /* Adds space between the letters */
+    text-align: center; /* Centers the title */
+    margin: 20px 0; /* Adds space above and below the title */
+    position: relative; /* For positioning the underline */
+}
+
+.title-category::after {
+    content: ''; 
+    width: 60px; /* Width of the underline */
+    height: 4px; /* Thickness of the underline */
+    background-color: #4A148C; /* Matches the title color */
+    position: absolute;
+    left: 50%; /* Centers the underline */
+    bottom: -10px; /* Positions it below the text */
+    transform: translateX(-50%); /* Ensures perfect centering */
+    border-radius: 2px; /* Slightly rounds the edges */
+}
+
+
 .category-image{
     padding: 5px;
     height: 60px;
     width: 70px;
 }
+
+.add-button {
+    background-color: #4A148C; /* Purple color */
+    color: white; /* White text color for better contrast */
+    border: none; /* Removes any border */
+    padding: 10px 20px; /* Adds some padding */
+    border-radius: 5px; /* Rounds the corners slightly */
+    cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
+    font-size: 16px; /* Sets the font size */
+    margin-right: 12px;
+}
+
+.add-button:hover {
+    background-color: #6a006a; /* Slightly darker purple for hover effect */
+}
+
+/* table css */
+
