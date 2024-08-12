@@ -19,6 +19,8 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   recordId!:number;
+  selectedId:boolean =false;
+
 
   constructor(
     private service: ApiService,
@@ -40,6 +42,10 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
+  
+
+  
 
   deleteCategory(id: any) {
     const dialogConfig = new MatDialogConfig();
@@ -66,6 +72,10 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
     });
   }
 
+ 
+  
+  
+
   openAddCategoryDialog(): void {
     const dialogRef = this.dialog.open(AddCategoryFormComponent);
 
@@ -82,7 +92,33 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // onUpdate(id :any){
+  onUpdate(id: any) {
+    //this.selectedId = id;
+    const dialogRef = this.dialog.open(AddCategoryFormComponent, {
+      data: { categoryId: id }  // Pass the id as data
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.snackBar.open('Category is updated!', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['custom-snackbar']
+        });
+        this.getAllCategory();
+      }
+    });
+  }
+
+
+  
+
+  
+}
+
+
+ // onUpdate(id :any){
   //   // console.log("category-id --> "+id)
   //    const dialogRef = this.dialog.open(AddCategoryFormComponent);
 
@@ -100,23 +136,3 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   //   }
 
   // }
-
-  onUpdate(id: any) {
-    const dialogRef = this.dialog.open(AddCategoryFormComponent, {
-      data: { categoryId: id }  // Pass the id as data
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.snackBar.open('Category is updated!', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          panelClass: ['custom-snackbar']
-        });
-        this.getAllCategory();
-      }
-    });
-  }
-  
-}

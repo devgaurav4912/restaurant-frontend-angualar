@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from '../api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LoaderService } from '../shared/loader.service';
 
 @Component({
   selector: 'app-add-category',
@@ -13,9 +14,9 @@ export class AddCategoryFormComponent implements OnInit {
 
   categoryForm: FormGroup;
   selectedFile!: File;
-  isSubmitting: boolean = false;
+ // isSubmitting: boolean = false;
   selectedId!:any;
-  categoryId: any;
+  categoryId?: any;
   updateData :boolean=false;
   categoryImageUrl? : String 
 
@@ -28,14 +29,16 @@ export class AddCategoryFormComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private routVaule : ActivatedRoute,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private loaderService: LoaderService
+    
     
   ) {
     this.categoryForm = this.fb.group({
       categoryName: ['', Validators.required],
       categoryImage: ['', Validators.required]
     });
-    this.categoryId = data.categoryId; 
+    this.categoryId = data?.categoryId; 
     console.log("CATEGORY_ID --> "+this.categoryId)
   }
 
@@ -74,88 +77,112 @@ export class AddCategoryFormComponent implements OnInit {
   }
 
 
-  postCategory() {
+  // postCategory() {
 
-   if(this.updateData){
+  //  if(this.updateData){
 
-    if (this.isSubmitting) return;
+  //   //if (this.isSubmitting) return;
 
-    this.isSubmitting = true;
+  //   //this.isSubmitting = true;
+  //   this.loaderService.show();
 
-      const formData = new FormData();
+  //     const formData = new FormData();
 
-      if (this.selectedFile) {
-        formData.append('file', this.selectedFile);
-    }
+  //     if (this.selectedFile) {
+  //       formData.append('file', this.selectedFile);
+  //   }
 
-      formData.append('category', new Blob([JSON.stringify( this.categoryForm.value)],{type:'application/json'}));
-      formData.append('file', this.selectedFile);
+  //     formData.append('category', new Blob([JSON.stringify( this.categoryForm.value)],{type:'application/json'}));
+  //     formData.append('file', this.selectedFile);
      
 
-//       if(this.selectedFile == null || undefined){
-//         try {
-//           const imageBlob = await this.service.fetchImageFromURL(this.categoryImageUrl as string).toPromise();
-//           if (imageBlob) {
-//             const  file = new File([imageBlob], 'businessLogo.jpg', { type: imageBlob.type });
-//             this.updateCategory(this.categoryId, formData,this.selectedFile)
-//           } else {
-//             this.showSnackBar('Settings updated successfully', 'Close', 'top');
+  //     this.service.updateCategory(this.categoryId,formData,this.selectedFile).subscribe((res: any) => {
+  //       console.log("Post Res --> "+res)
+  //       this.dialogRef.close(this.categoryForm.value);
+  //      // this.isSubmitting = false;
 
-//           }
-//         } catch (error) {
-//           console.error('Error fetching image from URL', error);
-//           this.isLoading = false;
-//         }
-//       }else if(){
+  //       this.loaderService.hide();
 
-//       }
-
-
-  //this.selectedFile = this.categoryImageUrl;
-
-
-      this.service.updateCategory(this.categoryId,formData,this.selectedFile).subscribe((res: any) => {
-        console.log("Post Res --> "+res)
-        this.dialogRef.close(this.categoryForm.value);
-        this.isSubmitting = false;
-
-
-      },(error: any) => {
-        console.error("Error adding product: ", error);
-        this.isSubmitting = false;
-      });
+  //     },(error: any) => {
+  //       console.error("Error adding product: ", error);
+  //     //  this.isSubmitting = false;
+  //       this.loaderService.hide();
+  //     });
     
 
-   }else{
-    if (this.isSubmitting) return;
+  //  }else{
+  //  // if (this.isSubmitting) return;
 
-    this.isSubmitting = true;
+  //   //this.isSubmitting = true;
+  //   this.loaderService.show();
 
-      const formData = new FormData();
+  //     const formData = new FormData();
 
-      formData.append('category', new Blob([JSON.stringify( this.categoryForm.value)],{type:'application/json'}));
-      formData.append('file', this.selectedFile);
+  //     formData.append('category', new Blob([JSON.stringify( this.categoryForm.value)],{type:'application/json'}));
+  //     formData.append('file', this.selectedFile);
 
-      console.log("before --> " + this.categoryForm.value);
-      console.log("before --> " + this.selectedFile);
-
-
-      this.service.postCategory(formData ,this.selectedFile).subscribe((res: any) => {
-        console.log("Post Res --> "+res)
-        this.dialogRef.close(this.categoryForm.value);
-        this.isSubmitting = false;
+  //     console.log("before --> " + this.categoryForm.value);
+  //     console.log("before --> " + this.selectedFile);
 
 
-      },(error: any) => {
-        console.error("Error adding product: ", error);
-        this.isSubmitting = false;
-      });
-   }
+  //     this.service.postCategory(formData ,this.selectedFile).subscribe((res: any) => {
+  //       console.log("Post Res --> "+res)
+  //       this.dialogRef.close(this.categoryForm.value);
+  //     //  this.isSubmitting = false;
+  //       this.loaderService.hide();
+
+
+  //     },(error: any) => {
+  //       console.error("Error adding product: ", error);
+  //      // this.isSubmitting = false;
+  //       this.loaderService.hide();
+  //     });
+  //  }
       
-    }
+  //   }
 
-    updateCategory(){
-
+  postCategory() {
+    this.loaderService.show();
+    console.log('Loader should be visible now');
+  
+    const formData = new FormData();
+  
+    if (this.updateData) {
+      if (this.selectedFile) {
+        formData.append('file', this.selectedFile);
+      }
+  
+      formData.append('category', new Blob([JSON.stringify(this.categoryForm.value)], { type: 'application/json' }));
+      formData.append('file', this.selectedFile);
+  
+      this.service.updateCategory(this.categoryId, formData, this.selectedFile).subscribe((res: any) => {
+        console.log("Post Res --> " + res);
+        this.dialogRef.close(this.categoryForm.value);
+        this.loaderService.hide();
+        console.log('Loader should be hidden now'); // Debugging line
+      }, (error: any) => {
+        console.error("Error adding product: ", error);
+        this.loaderService.hide();
+        console.log('Loader should be hidden now on error'); // Debugging line
+      });
+    } else {
+      formData.append('category', new Blob([JSON.stringify(this.categoryForm.value)], { type: 'application/json' }));
+      formData.append('file', this.selectedFile);
+  
+      this.service.postCategory(formData, this.selectedFile).subscribe((res: any) => {
+        console.log("Post Res --> " + res);
+        this.dialogRef.close(this.categoryForm.value);
+        this.loaderService.hide();
+        console.log('Loader should be hidden now'); 
+      }, (error: any) => {
+        console.error("Error adding product: ", error);
+        this.loaderService.hide();
+        console.log('Loader should be hidden now on error');
+      });
     }
+  }
+  
+
+    
   }
 
