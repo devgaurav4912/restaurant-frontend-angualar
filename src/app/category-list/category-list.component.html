@@ -1,6 +1,6 @@
-<div class="main-div">
+<div class="main-div container-fluid">
     <div class="d-flex justify-content-between align-items-center main-container">
-      <h2 class="mb-0 tittle mt-3" routerLink="/">Category List</h2>
+      <h2 class="mb-0 tittle mt-3 title-category" routerLink="/">Category List</h2>
       <button class="add-button mt-3" (click)="openAddCategoryDialog()">
         <span class="plus-sign">+</span> Add Category
       </button>
@@ -8,7 +8,8 @@
     <hr>
     <div class="container-fluid mt-1">
       <div class="row">
-        <div class="col category-table">
+        
+         <div class="col category-table"> 
           <table mat-table [dataSource]="dataSource" class="table-bordered text-center">
             <ng-container matColumnDef="SL">
               <th class="text-center" mat-header-cell *matHeaderCellDef> SL </th>
@@ -37,7 +38,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
           <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-        </div>
+        </div> 
       </div>
     </div>
   </div>
