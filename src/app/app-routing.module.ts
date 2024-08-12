@@ -6,6 +6,7 @@ import { BillingComponent } from './billing/billing.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { AddCategoryFormComponent } from './add-category/add-category.component';
+import { SettingMasterComponent } from './setting-master/setting-master.component';
 
 const routes: Routes = [
   {
@@ -32,10 +33,10 @@ const routes: Routes = [
     component : AddCategoryFormComponent,
     
   },
-  // {
-  //   path :"add-category/:id",
-  //   component : AddCategoryFormComponent,
-  // },
+  {
+    path :"setting-master",
+    component : SettingMasterComponent,
+  },
   {
     path :"billing",
     component : BillingComponent,
