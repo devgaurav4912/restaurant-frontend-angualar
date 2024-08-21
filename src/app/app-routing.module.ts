@@ -7,6 +7,7 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { AddCategoryFormComponent } from './add-category/add-category.component';
 import { SettingMasterComponent } from './setting-master/setting-master.component';
+import { ReportComponent } from './shared/report/report.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,11 @@ const routes: Routes = [
     path :"billing",
     component : BillingComponent,
     },
+
+    {
+      path :"report",
+      component : ReportComponent,
+      },
 ];
 
 @NgModule({

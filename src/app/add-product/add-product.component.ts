@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoaderService } from '../shared/loader.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddCustomerFormComponent } from '../add-customer-form/add-customer-form.component';
 
 @Component({
   selector: 'app-add-product',
@@ -21,7 +23,8 @@ export class AddProductComponent implements OnInit {
               private fb: FormBuilder,
               private router: Router,
               private snackBar: MatSnackBar,
-              private loaderService: LoaderService) {
+              private loaderService: LoaderService,
+              ) {
     this.addProductForm = this.fb.group({
       productName: ['', Validators.required],
       productImage: ['', Validators.required],
@@ -63,6 +66,7 @@ export class AddProductComponent implements OnInit {
     this.service.addProduct(formData, this.selectedFile, productData.selectedCategoryName)
       .subscribe((res: any) => {
         console.log("product res -->", res);
+        
         this.router.navigate([""]);
        // this.isSubmitting = false;
        this.loaderService.hide();
@@ -77,4 +81,6 @@ export class AddProductComponent implements OnInit {
         this.loaderService.hide();
       });
   }
+
+ 
 }
