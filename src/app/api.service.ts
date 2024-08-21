@@ -8,13 +8,13 @@ import { Observable } from 'rxjs';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  baseUrlLogin: string = 'http://localhost:8090/api/user';
+  baseUrlLogin: string = 'http://localhost:8080/api/user';
 
-  baseUrCategory: string = 'http://localhost:8090/api/category';
+  baseUrCategory: string = 'http://localhost:8080/api/category';
 
-  baseUrlProduct: string = 'http://localhost:8090/api/product';
+  baseUrlProduct: string = 'http://localhost:8080/api/product';
 
-  baseurl = "http://localhost:8090/api/settings"
+  baseurl = "http://localhost:8080/api/settings"
 
 
   // login Api
