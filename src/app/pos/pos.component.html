@@ -1,4 +1,7 @@
 <div class="main-body">
+  <alert *ngFor="let alert of alerts; let i = index" [type]="alert.type" (onClosed)="closeAlert(i)">
+    {{ alert.msg }}
+  </alert>
     <div class="container-fluid columns mt-2">
         <div class="row">
             <div class="col-md-8">
@@ -18,16 +21,187 @@
                         </div>
                     </div>
 
-                    <div class="row product-row">
-                        <div class="product-card" *ngFor="let product of categoryProducts">
-                            <img src="{{product.productImage}}" alt="Product Image">
-                            <p><strong>{{ product.productName }}</strong></p>
+                    <div class="row product-row" >
+                      <div *ngIf="categoryProducts.length === 0" class="empty-products">
+                        <img src="data:image/png;base64,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" alt="No Products" class="empty-image">
+                        <p class="empty-message">No products available in this category.</p>
+                    </div>
+                        <div class="product-card " *ngFor="let product of categoryProducts"
+                        (click)="getProductById(product.productId)">
+                            <img  src="{{product.productImage}}" alt="Product Image">
+                            <p class="product-name"><strong>{{ product.productName }}</strong></p>
+                            <p class="product-prize"><strong>{{ product.productPrice | currency:'INR':'symbol-narrow' }}</strong></p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mt-3">
-                <div class="p-3 border product-col"></div>
+            <div class="col-md-4 order-container">
+
+                <!-- <div class="customer-selection-container">
+                    <div class="customer-selection-box">
+                      <i class="fas fa-user customer-icon"></i>
+                      <input type="text" placeholder="Select A Customer" class="customer-input">
+                    </div>
+                    <button class="customer-button">
+                      <i class="fas fa-user-friends customer-button-icon"></i>
+                    </button>
+                  </div> -->
+
+                  <!-- <div class="customer-selection-container">
+                    <div class="customer-selection-box">
+                      <i class="fas fa-user customer-icon"></i>
+                      <input 
+                        type="text" 
+                        placeholder="Select A Customer" 
+                        class="customer-input" 
+                        [(ngModel)]="searchCustomer" 
+                        (input)="filterCustomers()"
+                        (blur)="resetSearch()"
+                      >
+                    </div>
+                    <button class="customer-button" (click)="selectCustomer()">
+                      <i class="fas fa-user-friends customer-button-icon"></i>
+                    </button>
+                  </div> -->
+
+                  <div class="customer-div">
+                    <div class="customer-selection-container">
+                      <div class="customer-selection-box">
+                        <i class="fas fa-user customer-icon"></i>
+                        <input 
+                          type="text" 
+                          placeholder="Select A Customer" 
+                          class="customer-input" 
+                          [(ngModel)]="searchCustomer" 
+                          (input)="filterCustomers()"
+                        >
+                        <div class="customer-btn">
+                          <button class="customer-button" (click)="openAddCustomerDialog()">
+                            <i class="fas fa-user-plus customer-button-icon"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Dropdown for filtered customers -->
+                      <div class="dropdown" *ngIf="filteredCustomers.length > 0">
+                        <div 
+                          class="dropdown-item" 
+                          *ngFor="let customer of filteredCustomers" 
+                          (click)="selectCustomer(customer)"
+                        >
+                          {{ customer.customerFullName }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+
+                <!-- <div class="order-header">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Walk-in Customer">
+                    </div>
+                    <button id="addCustomerBtn" type="button" class="btn btn-success" data-toggle="modal" data-target="#customerModal">Add</button>
+                </div> -->
+                <!-- <div class="order-header">
+
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="options" id="dinning" autocomplete="off" checked> Dinning
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="options" id="takeaway" autocomplete="off"> Takeaway
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="options" id="delivery" autocomplete="off"> Delivery
+                        </label>
+                    </div>
+                    <div class="form-group ml-3">
+                        <select class="form-control">
+                            <option>Choose Table</option>
+                        </select>
+                    </div>
+                </div> -->
+               
+                <div class="table-container">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th class="">Sl</th>
+                          <!-- <th>Image</th> -->
+                          <th>Name</th>
+                          <th>Price</th>
+                          <th>Qty</th>
+                          <th>Total</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead> 
+                      <tbody>
+                        <tr *ngFor="let item of cartProducts;  index as i">
+                          <td>{{i+1}}</td>
+                          <!-- <td><img class="product-image" src="{{item.productImage}}" alt="Product Image"></td> -->
+                          <td>{{item.productName}}</td>
+                          <td>{{item.productPrice | currency:'INR'}}</td>
+                          <td>
+                            <div class="quantity-container">
+                                <button (click)="decreaseQuantity(i)" class="btn btn-danger quantity-btn">-</button>
+                                <input type="text" class="form-control quantity-input text-center" [(ngModel)]="item.productQuantity" readonly>
+                                <button (click)="increaseQuantity(i)" class="btn btn-success quantity-btn">+</button>
+                            </div>
+                        </td>
+                            <td>{{item.productTotal| currency:'INR':'symbol-narrow'}}</td>
+                              <td class="delete-btn"><i class="fas fa-trash-alt" (click)="removeFromCart(i)"></i></td>
+                            </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="footer-row">
+                    <div class="row footer-row2">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="subTotal" class="form-label formfooter">Sub Total :</label>
+                                    <p id="subTotal">{{ subtotal | currency: 'INR':'symbol':'1.2-2':'en-IN' }}</p>
+                                </div>
+                                <div class="col-md-4">
+                                  <label for="discount" class="form-label formfooter">Discount :</label>
+                                  <select class="form-select" id="discount" [(ngModel)]="selectedDiscount" (change)="applyDiscount()">
+                                      <option value="0">No Discount</option>
+                                      <option value="10">10% off</option>
+                                      <option value="20">20% off</option>
+                                      <option value="30">30% off</option>
+                                      <option value="40">40% off</option>
+                                      <option value="50">50% off</option>
+                                  </select>
+                              </div>
+                                <!-- <div class="col-md-2">
+                                    <label for="paidAmount" class="form-label formfooter">Paid Amount :</label>
+                                    <input type="number" class="form-control" id="paidAmount" value="0">
+                                </div> -->
+                                <div class="col-md-2">
+                                    <label for="paymentType" class="form-label formfooter">Payment Type :</label>
+                                    <select class="form-select" id="paymentType">
+                                        <option value="Cash">Cash</option>
+                                        <option value="Card">Card</option>
+                                        <option value="Online">Online</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 botom-bar">
+                            <div class="row button-container">
+                                <div class="col bill-total">
+                                    <label for="billTotal" class="form-label formfooter">Bill Total</label>
+                                    <p id="billTotal">{{netTotal | currency: 'INR':'symbol':'1.2-2':'en-IN'}}</p>
+                                </div>
+                                <div class="col buttons">
+                                    <button type="button" class="btn btn-danger me-2" (click)="clearCart()">Clear</button>
+                                    <button type="button" class="btn btn-success" (click)="postCart()">Place Order</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>

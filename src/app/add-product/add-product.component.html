@@ -20,7 +20,7 @@
     <br />
     <div class="mt-1 mb-1">
       <label for="productPrice" class="form-label">Product Price -</label>
-      <input formControlName="productPrice" type="text" class="form-control" placeholder="Enter Product Price">
+      <input formControlName="productPrice" type="number" class="form-control" placeholder="Enter Product Price">
       <div *ngIf="addProductForm.get('productPrice')!.invalid && addProductForm.get('productPrice')!.touched" class="text-danger">
         Product price required!!
       </div>
