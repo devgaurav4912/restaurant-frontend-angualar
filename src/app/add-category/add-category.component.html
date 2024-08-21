@@ -3,24 +3,29 @@
   <mat-dialog-content>
     <hr>
     <form [formGroup]="categoryForm" (ngSubmit)="postCategory()">
+
       <mat-form-field class="add-category-form">
         <mat-label>Category Name</mat-label>
         <input matInput type="text" placeholder="Enter Category Name" formControlName="categoryName" required>
       </mat-form-field>
+      
       <br/>
       <div class="add-category-form">
         <mat-label>Select Category Image</mat-label>
         <input type="file" (change)="onFileChange($event)" required>
       </div>
+
+      <!-- Display the selected image or the existing image while updating -->
+      <div class="text-center" *ngIf="categoryImageUrl || selectedFile">
+        <img *ngIf="categoryImageUrl && !selectedFile" [src]="categoryImageUrl" alt="Category Image" style="max-width: 100%; max-height: 200px;">
+        <img *ngIf="selectedFile" [src]="categoryImageUrl" alt="Selected Category Image" style="max-width: 100%; max-height: 200px;">
+      </div>
+
       <br />
     </form>
   </mat-dialog-content>
   <mat-dialog-actions class="dialog-actions">
     <button mat-button (click)="onCancel()">Cancel</button>
-    <!-- <button mat-button (click)="onSave()" [disabled]="!categoryForm.valid">Save</button> -->
     <button mat-button (click)="onSave()">Save</button>
   </mat-dialog-actions>
-  <!-- <div *ngIf="isSubmitting">
-    <mat-spinner></mat-spinner>
-  </div> -->
 </div>

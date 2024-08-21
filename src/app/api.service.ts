@@ -14,7 +14,7 @@ export class ApiService {
 
   baseUrlProduct: string = 'http://localhost:8080/api/product';
 
-  baseurl = "http://localhost:8080/api/settings"
+  baseurl = "http://localhost:8090/api/settings"
 
 
   // login Api
@@ -67,6 +67,23 @@ export class ApiService {
     return this.http.get(`${this.baseUrlProduct}/getAllProducts`);
   }
 
+  
+  getProductById(productId:any){
+    return (this.http.get(`${this.baseUrlProduct}/${productId}`));
+  }
+
+//cartmaster
+
+postCart(cartObj: any , customerName: any) {
+  return (this.http.post(`${this.baseUrlCart}/add-cart/${customerName}`,cartObj,{ responseType: 'text' } ));
+
+}
+
+getAllCarts(){
+  return (this.http.get(`${this.baseUrlCart}/getAllCarts`));
+
+}
+
   //setting master
 
   updateSetting(businessName: string, settingMaster: any, file: File): Observable<any> {
@@ -82,8 +99,6 @@ export class ApiService {
     });
   }
 
-
-  
   getSettingByBusinessName(businessName: string): Observable<any> {
     return this.http.get<any>(`${this.baseurl}/${businessName}`);
   }
@@ -94,6 +109,18 @@ export class ApiService {
   fetchImageFromURL(url: string): Observable<Blob> {
     return this.http.get(url, { responseType: 'blob' });
   }
+
+
+  //Customer Master 
+
+  addCustomer(customerObj: any) {
+    return this.http.post(`${this.baseUrlCustomer}/addCustomer`, customerObj , {responseType: 'text',});
+  }
+
+  getAllCustomer(){
+    return this.http.get(`${this.baseUrlCustomer}/getAllCustomer`)
+  }
+
 
 
 
