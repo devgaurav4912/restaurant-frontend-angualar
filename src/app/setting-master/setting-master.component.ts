@@ -2,22 +2,27 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { SettingsService } from '../shared/settings.service';
 
 @Component({
   selector: 'app-setting-master',
   templateUrl: './setting-master.component.html',
-  styleUrl: './setting-master.component.css'
+  styleUrl: './setting-master.component.css',
 })
 export class SettingMasterComponent {
-
   data: any;
   settingsForm: FormGroup = this.fb.group({});
   logoPreview: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
   isLoading: boolean = false; // Loader flag
- // businessName: string = "Google";
+  // businessName: string = "Google";
 
-  constructor(private fb: FormBuilder, private settingservice: ApiService, private snackBar: MatSnackBar) {
+  constructor(
+    private fb: FormBuilder,
+    private settingservice: ApiService,
+    private snackBar: MatSnackBar,
+    private settingsService: SettingsService
+  ) {
     this.settingsForm = this.fb.group({
       settingId: ['', Validators.required],
       businessName: ['', Validators.required],
@@ -25,7 +30,7 @@ export class SettingMasterComponent {
       businessEmail: ['', [Validators.required, Validators.email]],
       businessAddress: ['', Validators.required],
       businessGstNumber: ['', Validators.required],
-      businessLogo:['']
+      businessLogo: [''],
     });
   }
 
@@ -34,19 +39,20 @@ export class SettingMasterComponent {
     //   this.populateForm(obj);
     //    this.data = obj;
     // });
-
-    this.settingservice.getsetting().subscribe(obj=>{
-      if(obj!=null){
-      this.populateForm(obj[0]);
-      this.data=obj[0];
-      this.data=obj[0].businessName;
-      console.log(this.data)
-      console.log(obj)
-      console.log("Data fetched when get")
-  }else{
-    alert("Somethig went wrong")
+    this.getSetting();
   }
-})
+
+  getSetting() {
+    this.settingservice.getsetting().subscribe((obj) => {
+      if (obj != null) {
+        this.populateForm(obj[0]);
+        this.data = obj[0].businessName;
+        this.settingsService.setBusinessName(obj[0].businessName);
+        this.settingsService.setBusinessLogo(obj[0].businessLogo);
+      } else {
+        alert('Something went wrong');
+      }
+    });
   }
 
   private populateForm(data: any): void {
@@ -56,10 +62,9 @@ export class SettingMasterComponent {
       businessMobile: data.businessMobile,
       businessEmail: data.businessEmail,
       businessAddress: data.businessAddress,
-      businessGstNumber: data.businessGstNumber
-      
+      businessGstNumber: data.businessGstNumber,
     });
-    this.logoPreview = data.businessLogo; 
+    this.logoPreview = data.businessLogo;
   }
 
   onFileChange(event: Event): void {
@@ -71,34 +76,37 @@ export class SettingMasterComponent {
       const reader = new FileReader();
       reader.onload = () => {
         this.logoPreview = reader.result;
+        this.settingsService.setBusinessLogo(this.logoPreview); // Update business logo in the shared service
       };
       reader.readAsDataURL(file);
     }
   }
 
- 
   async onSubmit(): Promise<void> {
-    console.log("in submit")
+    console.log('in submit');
     if (this.settingsForm.valid) {
-      console.log("in valid if")
+      console.log('in valid if');
       this.isLoading = true;
       const settingMaster = this.settingsForm.value;
 
       if (this.selectedFile) {
-        console.log("in image selected")
+        console.log('in image selected');
         this.uploadSetting(settingMaster, this.selectedFile);
       } else if (this.logoPreview) {
         // Fetch image from URL and convert to file
         try {
-          const imageBlob = await this.settingservice.fetchImageFromURL(this.logoPreview as string).toPromise();
+          const imageBlob = await this.settingservice
+            .fetchImageFromURL(this.logoPreview as string)
+            .toPromise();
           if (imageBlob) {
-            console.log("in image not selected")
+            console.log('in image not selected');
 
-            const file = new File([imageBlob], 'businessLogo.jpg', { type: imageBlob.type });
+            const file = new File([imageBlob], 'businessLogo.jpg', {
+              type: imageBlob.type,
+            });
             this.uploadSetting(settingMaster, file);
           } else {
             this.showSnackBar('Settings updated successfully', 'Close', 'top');
-
           }
         } catch (error) {
           console.error('Error fetching image from URL', error);
@@ -109,21 +117,20 @@ export class SettingMasterComponent {
   }
 
   private uploadSetting(settingMaster: any, file: File): void {
-    console.log("in uplod setting")
+    console.log('in uplod setting');
     this.settingservice.updateSetting(this.data, settingMaster, file).subscribe(
-      obj => {
-        if(obj!= null){
-        this.populateForm(obj);
-        this.isLoading = false;
-        this.showSnackBar('setting updated successfully', 'Close', 'top');
-
-        
-      }else{
-        this.isLoading = false;
-        this.showSnackBar('something wrong on server', 'Close', 'top');  
-      }
+      (obj) => {
+        if (obj != null) {
+          this.populateForm(obj);
+          this.isLoading = false;
+          this.getSetting();
+          this.showSnackBar('setting updated successfully', 'Close', 'top');
+        } else {
+          this.isLoading = false;
+          this.showSnackBar('something wrong on server', 'Close', 'top');
+        }
       },
-      error => {
+      (error) => {
         console.error(error);
         this.snackBar.open('Failed to update settings', 'Close', {
           duration: 3000, // Duration in milliseconds
@@ -131,13 +138,19 @@ export class SettingMasterComponent {
         this.isLoading = false;
       }
     );
+
+    
   }
 
-  private showSnackBar(message: string, action: string, position: 'top' | 'bottom'): void {
+  private showSnackBar(
+    message: string,
+    action: string,
+    position: 'top' | 'bottom'
+  ): void {
     const config: MatSnackBarConfig = {
       duration: 3000,
       horizontalPosition: 'center',
-      verticalPosition: position
+      verticalPosition: position,
     };
     this.snackBar.open(message, action, config);
   }
