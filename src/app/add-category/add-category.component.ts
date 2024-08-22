@@ -4,6 +4,7 @@ import { ApiService } from '../api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoaderService } from '../shared/loader.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-category',
@@ -30,7 +31,8 @@ export class AddCategoryFormComponent implements OnInit {
     private router: Router,
     private routVaule : ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private snackBar: MatSnackBar
     
     
   ) {
@@ -74,6 +76,13 @@ export class AddCategoryFormComponent implements OnInit {
   onFileChange(event: any) {
     this.selectedFile = event.target.files[0];
     console.log("selected image -s-> " + this.selectedFile);
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.categoryImageUrl = reader.result as string; // Generate the preview URL
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
   }
 
 
@@ -170,11 +179,22 @@ export class AddCategoryFormComponent implements OnInit {
       formData.append('file', this.selectedFile);
   
       this.service.postCategory(formData, this.selectedFile).subscribe((res: any) => {
-        console.log("Post Res --> " + res);
+        console.log("Post category Res --> " + res);
         this.dialogRef.close(this.categoryForm.value);
         this.loaderService.hide();
         console.log('Loader should be hidden now'); 
       }, (error: any) => {
+
+        if (error.status === 409) {
+          this.snackBar.open('Category is already present!!', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+          });     
+        } else {
+          alert("An error occurred: " + error.message);
+      }
+
         console.error("Error adding product: ", error);
         this.loaderService.hide();
         console.log('Loader should be hidden now on error');
