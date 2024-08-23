@@ -56,4 +56,16 @@
     background: rgba(255, 255, 255, 0.8);
     z-index: 1000;
   }
+
+  img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 5px;
+  }
+
+ 
   

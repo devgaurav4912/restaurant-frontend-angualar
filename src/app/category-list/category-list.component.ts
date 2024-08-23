@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ConfirmdialogComponent } from '../confirmdialog/confirmdialog.component';
 import { AddCategoryFormComponent } from '../add-category/add-category.component';
 import { Router } from '@angular/router';
+import { ShareDataService } from '../shared/share-data.service';
 
 @Component({
   selector: 'app-category-list',
@@ -15,18 +16,22 @@ import { Router } from '@angular/router';
 })
 export class CategoryListComponent implements OnInit, AfterViewInit {
 
+
   displayedColumns: string[] = ['SL', 'categoryImage', 'CategoryName', 'Action'];
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   recordId!:number;
   selectedId:boolean =false;
+  categoryList : any[]=[];
+  categoryCount? : number
 
 
   constructor(
     private service: ApiService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router : Router
+    private router : Router,
+    private dataservice : ShareDataService
   ) {}
 
   ngOnInit(): void {
@@ -36,16 +41,27 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   getAllCategory() {
     this.service.fetchAllCategory().subscribe((res: any) => {
       this.dataSource.data = res;
+      this.categoryList = res;
+      console.log("Category list count ==> " + this.categoryList.length);
+      this.categoryCount = this.categoryList.length;
+  
+      // Navigate with queryParams correctly
+      //this.router.navigate(["/report"], { queryParams: { count: this.categoryCount } });
+
+      console.log("category count --1-->"+ this.categoryCount)
+      this.dataservice.setCategoryCount(this.categoryCount);
+
+      console.log("category count --2-->"+ this.categoryCount)
+
     });
   }
+  
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-  
 
-  
 
   deleteCategory(id: any) {
     const dialogConfig = new MatDialogConfig();
@@ -64,7 +80,6 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
             duration: 3000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
-            panelClass: ['custom-snackbar']
           });
           this.dataSource.data = this.dataSource.data.filter(item => item.category_id !== id);
         });
@@ -77,7 +92,11 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   
 
   openAddCategoryDialog(): void {
-    const dialogRef = this.dialog.open(AddCategoryFormComponent);
+    const dialogRef = this.dialog.open(AddCategoryFormComponent ,{
+      height:'400',
+      width :'500px',
+      
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -95,7 +114,10 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
   onUpdate(id: any) {
     //this.selectedId = id;
     const dialogRef = this.dialog.open(AddCategoryFormComponent, {
-      data: { categoryId: id }  // Pass the id as data
+      data: { categoryId: id },
+      height:'500px',
+      width :'500px', 
+
     });
   
     dialogRef.afterClosed().subscribe(result => {

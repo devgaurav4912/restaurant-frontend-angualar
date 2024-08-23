@@ -8,13 +8,15 @@ import { Observable } from 'rxjs';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  baseUrlLogin: string = 'http://localhost:8081/api/user';
+  //urlVariable :string = "http://localhost:8090";
 
-  baseUrCategory: string = 'http://localhost:8081/api/category';
+  baseUrlLogin: string = 'http://localhost:8090/api/user';
 
-  baseUrlProduct: string = 'http://localhost:8081/api/product';
+  baseUrCategory: string = 'http://localhost:8090/api/category';
 
-  baseurl = "http://localhost:8081/api/settings"
+  baseUrlProduct: string = 'http://localhost:8090/api/product';
+
+  baseurl = "http://localhost:8090/api/settings"
 
 
   // login Api
@@ -59,6 +61,11 @@ export class ApiService {
     );
   }
 
+  updateProduct(productId:any , categoryName :string ,formData: FormData, file?: any  ) {
+    return this.http.put(`${this.baseUrlProduct}/updateProduct/${productId}/${categoryName}`,formData
+    );
+  }
+
   getProductsByCategoryName(categoryName: any) {
     return this.http.get(`${this.baseUrlProduct}/category/${categoryName}`);
   }
@@ -66,6 +73,27 @@ export class ApiService {
   getAllProducts() {
     return this.http.get(`${this.baseUrlProduct}/getAllProducts`);
   }
+
+  
+  getProductById(productId:any){
+    return (this.http.get(`${this.baseUrlProduct}/${productId}`));
+  }
+
+  deleteProduct(productId:any){
+    return (this.http.delete(`${this.baseUrlProduct}/delete/${productId}`));
+  }
+
+//cartmaster
+
+postCart(cartObj: any , customerName: any) {
+  return (this.http.post(`${this.baseUrlCart}/add-cart/${customerName}`,cartObj,{ responseType: 'text' } ));
+
+}
+
+getAllCarts(){
+  return (this.http.get(`${this.baseUrlCart}/getAllCarts`));
+
+}
 
   //setting master
 
@@ -82,8 +110,6 @@ export class ApiService {
     });
   }
 
-
-  
   getSettingByBusinessName(businessName: string): Observable<any> {
     return this.http.get<any>(`${this.baseurl}/${businessName}`);
   }
@@ -94,6 +120,18 @@ export class ApiService {
   fetchImageFromURL(url: string): Observable<Blob> {
     return this.http.get(url, { responseType: 'blob' });
   }
+
+
+  //Customer Master 
+
+  addCustomer(customerObj: any) {
+    return this.http.post(`${this.baseUrlCustomer}/addCustomer`, customerObj , {responseType: 'text',});
+  }
+
+  getAllCustomer(){
+    return this.http.get(`${this.baseUrlCustomer}/getAllCustomer`)
+  }
+
 
 
 

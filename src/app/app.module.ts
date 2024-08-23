@@ -28,6 +28,18 @@ import { MatInputModule } from '@angular/material/input';
 import { SettingMasterComponent } from './setting-master/setting-master.component';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './shared/loader/loader.component';
+import { AddCustomerFormComponent } from './add-customer-form/add-customer-form.component';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxPrintModule } from 'ngx-print';
+import { NumberToWordsPipe } from './number-to-words.pipe';
+import { ReportComponent } from './shared/report/report.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+
+
 
 
 
@@ -46,7 +58,11 @@ import { LoaderComponent } from './shared/loader/loader.component';
     AddCategoryFormComponent,
     AddProductComponent,
     SettingMasterComponent,
-    LoaderComponent
+    LoaderComponent,
+    AddCustomerFormComponent,
+    NumberToWordsPipe,
+    ReportComponent,
+    
     
   ],
   imports: [
@@ -69,6 +85,15 @@ import { LoaderComponent } from './shared/loader/loader.component';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    BrowserAnimationsModule, // Required for ngx-bootstrap animations
+    AlertModule.forRoot(),
+    ModalModule.forRoot(),
+    NgxPrintModule,
+    NgxEchartsModule.forRoot({ echarts: () => import('echarts') }), // Ensure this line is correct
+    MatSelectModule,
+    MatOptionModule
+
+    
   ],
   providers: [
     provideAnimationsAsync()
