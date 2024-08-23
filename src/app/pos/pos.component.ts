@@ -297,6 +297,7 @@ export class PosComponent implements OnInit {
       this.cartsList = res;
       console.log("cart count --> "+res)
       this.placeOrderCount = this.cartsList.length;
+      
       this.shareService.setPlaceOrderCount(this.placeOrderCount);
     })
   }

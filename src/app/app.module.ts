@@ -36,6 +36,9 @@ import { NumberToWordsPipe } from './number-to-words.pipe';
 import { ReportComponent } from './shared/report/report.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+
 
 
 
@@ -87,6 +90,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     ModalModule.forRoot(),
     NgxPrintModule,
     NgxEchartsModule.forRoot({ echarts: () => import('echarts') }), // Ensure this line is correct
+    MatSelectModule,
+    MatOptionModule
 
     
   ],

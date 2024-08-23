@@ -159,8 +159,8 @@
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label for="subTotal" class="form-label formfooter">Sub Total :</label>
-                                    <p id="subTotal">{{ subtotal | currency: 'INR':'symbol':'1.2-2':'en-IN' }}</p>
+                                    <label for="subTotal" class="form-label formfooter" >Sub Total :</label>
+                                    <p id="subTotal" style="color: blue;">{{ subtotal | currency: 'INR':'symbol':'1.2-2':'en-IN' }}</p>
                                 </div>
                                 <div class="col-md-4">
                                   <label for="discount" class="form-label formfooter">Discount :</label>
@@ -191,7 +191,7 @@
                             <div class="row button-container">
                                 <div class="col bill-total">
                                     <label for="billTotal" class="form-label formfooter">Bill Total</label>
-                                    <p id="billTotal">{{netTotal | currency: 'INR':'symbol':'1.2-2':'en-IN'}}</p>
+                                    <p id="billTotal" style="color: green;">{{netTotal | currency: 'INR':'symbol':'1.2-2':'en-IN'}}</p>
                                 </div>
                                 <div class="col buttons">
                                     <button type="button" class="btn btn-danger me-2" (click)="clearCart()">Clear</button>

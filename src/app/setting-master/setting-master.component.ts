@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../api.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { SettingsService } from '../shared/settings.service';
+import { LoaderService } from '../shared/loader.service';
 
 @Component({
   selector: 'app-setting-master',
@@ -21,7 +22,8 @@ export class SettingMasterComponent {
     private fb: FormBuilder,
     private settingservice: ApiService,
     private snackBar: MatSnackBar,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private loaderService : LoaderService
   ) {
     this.settingsForm = this.fb.group({
       settingId: ['', Validators.required],
@@ -86,7 +88,8 @@ export class SettingMasterComponent {
     console.log('in submit');
     if (this.settingsForm.valid) {
       console.log('in valid if');
-      this.isLoading = true;
+     // this.isLoading = true;
+     this.loaderService.show();
       const settingMaster = this.settingsForm.value;
 
       if (this.selectedFile) {
@@ -110,7 +113,8 @@ export class SettingMasterComponent {
           }
         } catch (error) {
           console.error('Error fetching image from URL', error);
-          this.isLoading = false;
+         // this.isLoading = false;
+          this.loaderService.hide();
         }
       }
     }
@@ -122,11 +126,13 @@ export class SettingMasterComponent {
       (obj) => {
         if (obj != null) {
           this.populateForm(obj);
-          this.isLoading = false;
+          //this.isLoading = false;
+          this.loaderService.hide();
           this.getSetting();
           this.showSnackBar('setting updated successfully', 'Close', 'top');
         } else {
-          this.isLoading = false;
+          //this.isLoading = false;
+          this.loaderService.hide();
           this.showSnackBar('something wrong on server', 'Close', 'top');
         }
       },
@@ -136,6 +142,8 @@ export class SettingMasterComponent {
           duration: 3000, // Duration in milliseconds
         });
         this.isLoading = false;
+        this.loaderService.hide();
+
       }
     );
 

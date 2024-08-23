@@ -1,17 +1,20 @@
 .main-div {
     display: flex;
     justify-content: center;
+    align-items: center;
     font-family: Arial, sans-serif;
+    width: 54mm;
+    height: 100vh; /* Full height of the viewport */
+    margin: 0 auto; /* Center horizontally */
 }
 
 .invoice-box {
     width: 100%;
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
+    max-width: 54mm;
+    padding: 0px;
     border: 1px solid #eee;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 8px;
+    line-height: 1.2;
     color: #555;
 }
 
@@ -23,32 +26,33 @@
 }
 
 .invoice-box table td {
-    padding: 5px;
+    padding: 2px;
     vertical-align: top;
 }
 
 .invoice-box table tr.top table td {
-    padding-bottom: 20px;
-    text-align: center; /* Center-align the content */
+    padding-bottom: 10px;
+    text-align: center;
 }
 
 .invoice-box table tr.top table td.title {
-    font-size: 45px;
-    line-height: 45px;
+    font-size: 20px;
+    line-height: 20px;
     color: #333;
 }
 
 .invoice-box table tr.information table td {
-    padding-bottom: 40px;
+    padding-bottom: 20px;
 }
 
 .invoice-box table tr.heading td {
     border-bottom: 1px solid #ddd;
     font-weight: bold;
+    font-size: 9px;
 }
 
 .invoice-box table tr.details td {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .invoice-box table tr.item td {
@@ -77,33 +81,30 @@
 }
 
 .small {
-    font-size: 12px;
+    font-size: 8px;
 }
 
 .payment-method {
-    padding-right: 20px; /* Adjust the value as needed for the desired spacing */
+    padding-right: 5px;
 }
 
 .item-name {
-    padding-right: 20px; /* Adjust the value as needed for the desired spacing */
+    padding-right: 5px;
 }
 
 @media print {
-    /* Example: Hide buttons during print */
     button {
         display: none;
     }
 
-    /* Customize the print layout */
     .invoice-box {
         margin: 0;
         padding: 0;
         width: 100%;
     }
 
-    /* Ensure the logo is centered */
     .invoice-box table tr.top table td img {
-        margin: 0 auto; /* Center-align the logo */
+        margin: 0 auto;
         display: block;
     }
 }
