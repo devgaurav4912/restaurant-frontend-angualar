@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
+  //urlVariable :string = "http://localhost:8090";
+
   baseUrlLogin: string = 'http://localhost:8090/api/user';
 
   baseUrCategory: string = 'http://localhost:8090/api/category';
@@ -63,6 +65,11 @@ export class ApiService {
     );
   }
 
+  updateProduct(productId:any , categoryName :string ,formData: FormData, file?: any  ) {
+    return this.http.put(`${this.baseUrlProduct}/updateProduct/${productId}/${categoryName}`,formData
+    );
+  }
+
   getProductsByCategoryName(categoryName: any) {
     return this.http.get(`${this.baseUrlProduct}/category/${categoryName}`);
   }
@@ -74,6 +81,10 @@ export class ApiService {
   
   getProductById(productId:any){
     return (this.http.get(`${this.baseUrlProduct}/${productId}`));
+  }
+
+  deleteProduct(productId:any){
+    return (this.http.delete(`${this.baseUrlProduct}/delete/${productId}`));
   }
 
 //cartmaster

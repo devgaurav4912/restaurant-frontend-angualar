@@ -14,9 +14,9 @@
 .form-container {
     background-color: #ffffff; /* Set background to white */
     padding: 1rem;
-    max-width: 500px; /* Decreased width of the form */
+    max-width: 512px; /* Decreased width of the form */
     width: 100%;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Added shadow for depth */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     
 }
@@ -31,6 +31,7 @@
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 1.5rem;
+    color: #4A148C;
 }
 
 .form-control-sm {
@@ -106,4 +107,19 @@
     height: 100%;
     background-color: rgba(255, 255, 255, 0.7);
     z-index: 1000;
+}
+
+.update-button {
+    background-color: #b55add; /* Purple color */
+    color: white; /* White text color for better contrast */
+    border: none; /* Removes any border */
+    padding: 10px 20px; /* Adds some padding */
+    border-radius: 5px; /* Rounds the corners slightly */
+    cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
+    font-size: 16px; /* Sets the font size */
+    margin-right: 12px;
+}
+
+.update-button:hover {
+    background-color: #6a006a; /* Slightly darker purple for hover effect */
 }

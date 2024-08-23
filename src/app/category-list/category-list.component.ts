@@ -16,6 +16,7 @@ import { ShareDataService } from '../shared/share-data.service';
 })
 export class CategoryListComponent implements OnInit, AfterViewInit {
 
+
   displayedColumns: string[] = ['SL', 'categoryImage', 'CategoryName', 'Action'];
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -60,9 +61,7 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  
 
-  
 
   deleteCategory(id: any) {
     const dialogConfig = new MatDialogConfig();
@@ -94,7 +93,7 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
 
   openAddCategoryDialog(): void {
     const dialogRef = this.dialog.open(AddCategoryFormComponent ,{
-      height:'500px',
+      height:'400',
       width :'500px',
       
     });
