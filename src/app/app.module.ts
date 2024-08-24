@@ -38,9 +38,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-
-
-
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -91,7 +89,8 @@ import { MatOptionModule } from '@angular/material/core';
     NgxPrintModule,
     NgxEchartsModule.forRoot({ echarts: () => import('echarts') }), // Ensure this line is correct
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    MatSortModule
 
     
   ],
