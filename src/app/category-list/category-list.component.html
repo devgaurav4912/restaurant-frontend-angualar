@@ -1,4 +1,4 @@
-<div class="main-div container-fluid">
+<div class="main-div">
     <div class="d-flex justify-content-between align-items-center main-container">
       <h2 class="tittle mt-4 title-category" routerLink="/">Category List</h2>
       <button class="add-button mt-3" (click)="openAddCategoryDialog()">
@@ -19,17 +19,36 @@
               <th class="text-center" mat-header-cell *matHeaderCellDef> Category Image </th>
               <td class="text-center" mat-cell *matCellDef="let element"><img class="category-image" src="{{element.categoryImage}}"></td>
             </ng-container>
+
             <ng-container matColumnDef="CategoryName">
               <th class="text-center" mat-header-cell *matHeaderCellDef> Category Name </th>
               <td class="text-center" mat-cell *matCellDef="let element">{{element.categoryName}}</td>
             </ng-container>
+
+            <!-- <ng-container matColumnDef="Status">
+              <th class="text-center" mat-header-cell *matHeaderCellDef>  Category Status </th>
+              <td class="text-center" mat-cell *matCellDef="let element">{{element.status}}</td>
+            </ng-container> -->
+
+            <ng-container matColumnDef="Status">
+              <th class="text-center" mat-header-cell *matHeaderCellDef> Category Status </th>
+              <td
+                class="text-center"
+                mat-cell
+                *matCellDef="let element"
+                [ngClass]="{'active-status': element.status === 'Active', 'inactive-status': element.status === 'Inactive'}"
+              >
+                {{element.status}}
+              </td>
+            </ng-container>
+
             <ng-container matColumnDef="Action">
               <th class="text-center" mat-header-cell *matHeaderCellDef> Action </th>
               <td class="text-center" mat-cell *matCellDef="let element">
                 <button class="btn btn-primary btn-sm me-2" (click)="onUpdate(element.categoryId)">
                   <i class="far fa-edit"></i>
                 </button>
-                <button class="btn btn-danger btn-sm" (click)="deleteCategory(element.categoryId)">
+                <button class="btn btn-danger btn-sm" (click)="deleteCategory(element.categoryId,element.status)">
                   <i class="far fa-trash-alt"></i>
                 </button>
               </td>

@@ -92,7 +92,6 @@ postCart(cartObj: any , customerName: any) {
 
 getAllCarts(){
   return (this.http.get(`${this.baseUrlCart}/getAllCarts`));
-
 }
 
   //setting master

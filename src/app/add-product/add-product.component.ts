@@ -168,8 +168,11 @@ export class AddProductComponent implements OnInit {
     dialogConfig.width = '100px'; // Adjust the width as needed
     dialogConfig.position = { top: '20%', left: '35%' };
     
-    const dialogRef = this.dialog.open(ConfirmdialogComponent);
-
+    const dialogRef = this.dialog.open(ConfirmdialogComponent , {
+      data :{message: 'Are you sure you want to delete this product !!',
+            isWarning :false
+      }
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.service.deleteProduct(id).subscribe(() => {

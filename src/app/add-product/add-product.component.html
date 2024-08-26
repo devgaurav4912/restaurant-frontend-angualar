@@ -38,7 +38,7 @@
         <div class="mt-0 mb-1">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Product Price</mat-label>
-            <input matInput formControlName="productPrice" type="number" placeholder="Enter Product Price">
+            <input matInput formControlName="productPrice" type="number" placeholder="Enter Product Price" min="0">
             <mat-error *ngIf="addProductForm.get('productPrice')!.invalid && addProductForm.get('productPrice')!.touched">
               Product price required!!
             </mat-error>
@@ -122,7 +122,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <mat-paginator [length]="dataSource.data.length" [pageSize]="5"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="dataSource.data.length"></mat-paginator>
 </div>
     
   </div>
