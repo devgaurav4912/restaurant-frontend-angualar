@@ -9,6 +9,7 @@ import { ProductMaster } from '../model/product';
 import { PrintDataService } from '../shared/print-data.service';
 import { LoaderService } from '../shared/loader.service';
 import { ShareDataService } from '../shared/share-data.service';
+import { CartService } from '../cart-service.service';
 
 @Component({
   selector: 'app-pos',
@@ -52,13 +53,16 @@ export class PosComponent implements OnInit {
               private cdr: ChangeDetectorRef,
               private printDataService : PrintDataService,
               private loaderService : LoaderService,
-              private shareService : ShareDataService
+              private shareService : ShareDataService,
+              private cartService: CartService
               ) { }
 
   ngOnInit(): void {
     this.getAllCategory();
     this.getAllProducts();
     this.getAllCustomer();
+    this.getAllCarts();
+    this.cartProducts = this.cartService.getCartProducts();
   }
 
   getAllCategory() {
@@ -178,6 +182,8 @@ export class PosComponent implements OnInit {
       this.updateSubtotal();
       console.log("onClick product obj --> ", res);
     });
+    this.cartService.setCartProducts(this.cartProducts);
+    
   }
   
   
@@ -233,6 +239,7 @@ export class PosComponent implements OnInit {
 
   clearCart(): void {
     this.cartProducts = [];
+    this.cartService.setCartProducts(this.cartProducts);
     this.productTotal = {}; 
     this.updateSubtotal();
   }
@@ -277,9 +284,6 @@ export class PosComponent implements OnInit {
 
     console.log("product obj -->"+ cartData)
   
-
-    
-
     this.service.postCart(cartData ,this.selectedCustomerName).subscribe((res:any)=>{
     console.log("==cart-post-res===> "+res)
     
@@ -297,6 +301,7 @@ export class PosComponent implements OnInit {
       this.cartsList = res;
       console.log("cart count --> "+res)
       this.placeOrderCount = this.cartsList.length;
+      
       this.shareService.setPlaceOrderCount(this.placeOrderCount);
     })
   }

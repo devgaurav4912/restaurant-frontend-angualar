@@ -16,7 +16,8 @@ import { ShareDataService } from '../shared/share-data.service';
 })
 export class CategoryListComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['SL', 'categoryImage', 'CategoryName', 'Action'];
+
+  displayedColumns: string[] = ['SL', 'categoryImage', 'CategoryName','Status', 'Action'];
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   recordId!:number;
@@ -60,32 +61,64 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  
 
-  
 
-  deleteCategory(id: any) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '100px'; // Adjust the width as needed
-    dialogConfig.position = { top: '20%', left: '35%' };
+  deleteCategory(id: any , status:any) {
 
-    const dialogRef = this.dialog.open(ConfirmdialogComponent);
+    if(status === "Active"){
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.service.deleteCategory(id).subscribe(() => {
-          this.getAllCategory();
-          this.snackBar.open('Your category has been deleted', 'Close', {
-            duration: 3000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '100px'; // Adjust the width as needed
+      dialogConfig.position = { top: '20%', left: '35%' };
+      
+      const dialogRef = this.dialog.open(ConfirmdialogComponent , {
+        data :{message: 'Deleting this category will also remove all associated products. Are you sure you want to proceed?',
+              isWarning :true
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.service.deleteCategory(id).subscribe(() => {
+            this.getAllCategory();
+            this.snackBar.open('Your category has been deleted', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+            this.dataSource.data = this.dataSource.data.filter(item => item.category_id !== id);
           });
-          this.dataSource.data = this.dataSource.data.filter(item => item.category_id !== id);
-        });
-      }
-    });
+        }
+      });
+
+    }else{
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '100px'; // Adjust the width as needed
+      dialogConfig.position = { top: '20%', left: '35%' };
+      const dialogRef = this.dialog.open(ConfirmdialogComponent ,{
+        data :{message: 'Are you sure you want to delete this category?'}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.service.deleteCategory(id).subscribe(() => {
+            this.getAllCategory();
+            this.snackBar.open('Your category has been deleted', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
+            this.dataSource.data = this.dataSource.data.filter(item => item.category_id !== id);
+          });
+        }
+      });
+
+    }
+  
   }
 
  
@@ -116,7 +149,7 @@ export class CategoryListComponent implements OnInit, AfterViewInit {
     //this.selectedId = id;
     const dialogRef = this.dialog.open(AddCategoryFormComponent, {
       data: { categoryId: id },
-      height:'500px',
+      height:'550px',
       width :'500px', 
 
     });

@@ -43,6 +43,8 @@ export class BillingComponent implements OnInit {
     //   printWindow?.focus();
     //   printWindow?.print();
     // }
+    
+    window.print()
   }
 
 }

@@ -11,6 +11,9 @@ export class ShareDataService {
   private productCount : any;
   private customerCount : any;
   private placeOrderCount :any;
+
+  private monthlySalesData: any[] = [];
+
   
 
   setCategoryCount(count: number) {
@@ -41,11 +44,20 @@ export class ShareDataService {
 
 
   setPlaceOrderCount(count: number) {
-    this.customerCount = count;
+    this.placeOrderCount = count;
   }
 
   getPlaceOrderCount(): number {
-    return this.customerCount;
+    return this.placeOrderCount;
+  }
+
+
+  setMonthlySalesData(data: any[]) {
+    this.monthlySalesData = data;
+  }
+
+  getMonthlySalesData() {
+    return this.monthlySalesData;
   }
   
 }

@@ -1,4 +1,4 @@
-<div class="main-div"  id="print-section">
+<div class="main-div text-center"  id="print-section">
     <div class="invoice-box">
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
@@ -14,7 +14,7 @@
                         </tr>
                     </table> -->
                     <div class="text-center">
-                        <img src="https://res.cloudinary.com/dh8v09eaj/image/upload/v1723351924/logo.png" style="width: 100%; max-width: 100px;">
+                        <img src="https://res.cloudinary.com/dh8v09eaj/image/upload/v1723351924/logo.png" style="width: 100%; max-width: 50px;">
                         <br>
                         TasteHeaven<br>
                         Mobile: 4567832190, Email: testheaven.com
@@ -130,7 +130,7 @@
     <!-- <button (click)="printInvoice()" class="btn btn-primary text-center">Print Invoice</button> -->
 </div>
 
-<button printSectionId="print-section" ngxPrint class="btn btn-primary text-center">Print Invoice</button>
-
+<!-- <<button printSectionId="print-section" ngxPrint class="btn btn-primary text-center">Print Invoice</button> -->
+<button (click)="printInvoice()">Print</button>
 
 
