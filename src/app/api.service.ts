@@ -18,6 +18,10 @@ export class ApiService {
 
   baseurl = "http://localhost:8081/api/settings"
 
+  baseUrlCart ='http://localhost:8081/api/cartmaster'
+
+  baseUrlCustomer ='http://localhost:8081/api/customer'
+
 
   // login Api
 
