@@ -49,8 +49,9 @@
         <input type="file" class="form-control-file" id="businessLogo" accept="image/*" (change)="onFileChange($event)">
         <img [src]="logoPreview || data?.businessLogo" id="logoPreview" class="logo-img" *ngIf="logoPreview || data?.businessLogo" alt="Business Logo">
       </div>
-      
-      <button type="submit" class="btn btn-primary btn-lg btn-center" style="width: 200px;">Update</button>
+      <div class="text-center mt-3">
+        <button type="submit" class="update-button" style="width: 200px;">Update</button>
+      </div>
     </form>
     
     <div *ngIf="isLoading" class="loader-container">

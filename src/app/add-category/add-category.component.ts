@@ -38,6 +38,7 @@ export class AddCategoryFormComponent implements OnInit {
   ) {
     this.categoryForm = this.fb.group({
       categoryName: ['', Validators.required],
+      status :['' , Validators.required],
       categoryImage: ['', Validators.required]
     });
     this.categoryId = data?.categoryId; 
@@ -151,6 +152,7 @@ export class AddCategoryFormComponent implements OnInit {
   //   }
 
   postCategory() {
+    
     this.loaderService.show();
     console.log('Loader should be visible now');
   
@@ -170,6 +172,15 @@ export class AddCategoryFormComponent implements OnInit {
         this.loaderService.hide();
         console.log('Loader should be hidden now'); // Debugging line
       }, (error: any) => {
+      //   if (error.status === 409) {
+      //     this.snackBar.open('Category is already present!!', 'Close', {
+      //       duration: 3000,
+      //       horizontalPosition: 'center',
+      //       verticalPosition: 'bottom',
+      //     });     
+      //   } else {
+      //     alert("An error occurred: " + error.message);
+      // }
         console.error("Error adding product: ", error);
         this.loaderService.hide();
         console.log('Loader should be hidden now on error'); // Debugging line

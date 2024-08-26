@@ -26,7 +26,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddProductComponent } from './add-product/add-product.component';
 import { MatInputModule } from '@angular/material/input';
 import { SettingMasterComponent } from './setting-master/setting-master.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { AddCustomerFormComponent } from './add-customer-form/add-customer-form.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -36,8 +36,9 @@ import { NumberToWordsPipe } from './number-to-words.pipe';
 import { ReportComponent } from './shared/report/report.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxEchartsModule } from 'ngx-echarts';
-
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -87,6 +88,10 @@ import { NgxEchartsModule } from 'ngx-echarts';
     ModalModule.forRoot(),
     NgxPrintModule,
     NgxEchartsModule.forRoot({ echarts: () => import('echarts') }), // Ensure this line is correct
+    MatSelectModule,
+    MatOptionModule,
+    MatSortModule,
+    CurrencyPipe 
 
     
   ],
