@@ -19,3 +19,8 @@
     display: block;
     margin-left: 100px;
 }
+
+.warning-message {
+  color: red;
+  font-weight: bold;
+}

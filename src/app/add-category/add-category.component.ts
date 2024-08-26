@@ -38,6 +38,7 @@ export class AddCategoryFormComponent implements OnInit {
   ) {
     this.categoryForm = this.fb.group({
       categoryName: ['', Validators.required],
+      status :['' , Validators.required],
       categoryImage: ['', Validators.required]
     });
     this.categoryId = data?.categoryId; 

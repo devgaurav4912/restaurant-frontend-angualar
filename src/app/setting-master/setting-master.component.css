@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Prevent scrolling */
+    overflow: hidden; 
     width: 100%;
     margin-top: 10px;
 
@@ -12,13 +12,12 @@
 
 
 .form-container {
-    background-color: #ffffff; /* Set background to white */
+    background-color: #ffffff; 
     padding: 1rem;
-    max-width: 512px; /* Decreased width of the form */
+    max-width: 512px;
     width: 100%;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    
 }
 
 

@@ -1,4 +1,4 @@
-.loader-overlay {
+/* .loader-overlay {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,5 +57,55 @@
     50% {
       transform: rotate(-30deg);
     }
+  }
+  
+   */
+
+   .loader-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 2000;
+  }
+  
+  .loader {
+    width: 50px;
+    aspect-ratio: 1;
+    display: grid;
+    border: 4px solid #0000;
+    border-radius: 50%;
+    border-color: #d0aaff #0000; /* Adjusted for purple theme */
+    animation: l16 1s infinite linear;
+  }
+  
+  .loader::before,
+  .loader::after {    
+    content: "";
+    grid-area: 1/1;
+    margin: 2px;
+    border: inherit;
+    border-radius: 50%;
+  }
+  
+  .loader::before {
+    border-color: #a86cba #0000; /* Adjusted for a shade of purple */
+    animation: inherit; 
+    animation-duration: .5s;
+    animation-direction: reverse;
+  }
+  
+  .loader::after {
+    margin: 8px;
+    border-color: #d0aaff #0000; /* Adjusted for purple theme */
+  }
+  
+  @keyframes l16 { 
+    100% { transform: rotate(1turn) }
   }
   
