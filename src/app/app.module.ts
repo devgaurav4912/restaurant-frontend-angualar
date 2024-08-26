@@ -86,8 +86,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     AlertModule.forRoot(),
     ModalModule.forRoot(),
     NgxPrintModule,
-    NgxEchartsModule.forRoot({ echarts: () => import('echarts') }), // Ensure this line is correct
-
+    
     
   ],
   providers: [

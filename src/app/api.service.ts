@@ -16,6 +16,8 @@ export class ApiService {
 
   baseurl = "http://localhost:8090/api/settings"
 
+  baseUrlCart : string ="http://localhost:8090/api/cartmaster";
+
 
   // login Api
 
